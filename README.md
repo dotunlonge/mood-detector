@@ -154,8 +154,17 @@ Only spaCy, no LLMs needed.
 # 🧪 Installation
 
 ```bash
-pip install spacy
+# Install dependencies
+pip install -r requirements.txt
+
+# Download spaCy model
 python -m spacy download en_core_web_sm
+```
+
+Or install as a package:
+
+```bash
+pip install -e .
 ```
 
 Clone the repo:
@@ -163,9 +172,13 @@ Clone the repo:
 ```bash
 git clone https://github.com/yourname/spacy-mood-detective
 cd spacy-mood-detective
+pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 ```
 
-Run it:
+## 🚀 Usage
+
+### CLI
 
 ```bash
 python3 detective.py "I'm too tired to deal with this API today."
@@ -176,6 +189,51 @@ Or make it executable and run directly:
 ```bash
 chmod +x detective.py
 ./detective.py "I'm too tired to deal with this API today."
+```
+
+### 🌐 Web UI (Streamlit)
+
+Launch the interactive web interface:
+
+```bash
+streamlit run app.py
+```
+
+Then open your browser to `http://localhost:8501`
+
+### 🔌 REST API (FastAPI)
+
+Start the API server:
+
+```bash
+python3 api.py
+```
+
+Or with uvicorn:
+
+```bash
+uvicorn api:app --reload
+```
+
+API will be available at `http://localhost:8000`
+
+**API Endpoints:**
+- `GET /` - API information
+- `GET /health` - Health check
+- `POST /analyze` - Analyze single text
+- `POST /analyze/batch` - Analyze multiple texts
+
+**Example API Request:**
+```bash
+curl -X POST "http://localhost:8000/analyze" \
+     -H "Content-Type: application/json" \
+     -d '{"text": "I'm so happy and excited!"}'
+```
+
+### 🧪 Run Tests
+
+```bash
+pytest tests/
 ```
 
 ---
@@ -190,12 +248,19 @@ spacy-mood-detective/
 │   ├── detector.py        # spaCy custom component
 │   └── patterns.py        # mood/match patterns
 │
+├── tests/
+│   ├── __init__.py
+│   └── test_detector.py   # Unit tests
+│
 ├── examples/
 │   └── sample_texts.txt
 │
 ├── detective.py           # CLI runner
-├── README.md
-└── requirements.txt
+├── app.py                 # Streamlit web UI
+├── api.py                 # FastAPI REST API
+├── setup.py               # Package setup
+├── requirements.txt       # Dependencies
+└── README.md
 ```
 
 ---
@@ -225,35 +290,55 @@ Clean, simple, fun.
 
 ---
 
-# 🎨 Optional: Web UI
+# 🎨 Web UI & API
 
-Add a tiny **Streamlit** or **Gradio** interface:
+### ✅ Streamlit Web Interface
 
-* Type text
+Interactive web UI with:
+* Real-time mood detection
+* Visual vibe score display
+* Emotional trigger highlighting
+* JSON export
+* Example texts
 
-* Detect mood
+Run with: `streamlit run app.py`
 
-* Highlight phrases
+### ✅ FastAPI REST API
 
-* Massive emojis for mood output
+Production-ready API with:
+* Single text analysis endpoint
+* Batch processing endpoint
+* OpenAPI/Swagger documentation
+* Health check endpoint
+* CORS enabled
 
-People will love it.
+Run with: `python3 api.py` or `uvicorn api:app --reload`
+
+Access docs at: `http://localhost:8000/docs`
 
 ---
 
-# 🌟 Ideas for Future Add-Ons
+# 🌟 Features
 
-* **Sarcasm classifier**
+### ✅ Implemented
 
-* **"Breakup message detector"**
+* **30+ mood categories** - Comprehensive emotional detection
+* **Custom spaCy component** - Production-ready NLP pipeline
+* **CLI interface** - Command-line tool
+* **Web UI** - Interactive Streamlit interface
+* **REST API** - FastAPI with batch processing
+* **Unit tests** - Test coverage
+* **Package installation** - Proper Python package setup
 
-* **Text rewrite to improve vibe score**
+### 🚀 Future Add-Ons
 
-* **Toxicity blocker**
-
-* **Slack bot** that analyzes team messages
-
-* **API endpoint** for mood-as-a-service (MaaS)
+* **Sarcasm classifier** - Enhanced sarcasm detection
+* **Text rewrite** - Improve vibe score suggestions
+* **Toxicity blocker** - Content moderation
+* **Slack bot** - Real-time team mood analysis
+* **Data visualization** - Charts and graphs
+* **Model training** - Custom ML models
+* **Multi-language support** - Beyond English
 
 ---
 
